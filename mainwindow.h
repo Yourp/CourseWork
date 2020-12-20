@@ -2,7 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDate>
 #include <QMap>
+
+constexpr uint8_t WorkingHours = 8;
 
 enum TableColumnType
 {
@@ -10,6 +13,14 @@ enum TableColumnType
     Surname,
     PhoneNumber,
     ColumnTypeMax
+};
+
+struct WorkingDay
+{
+    QDate Date;
+    QString Orders[WorkingHours][ColumnTypeMax];
+
+    void SetOrder(int TimeIndex, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
 };
 
 
@@ -27,13 +38,20 @@ public:
 
     void closeEvent(QCloseEvent *Event) override;
 
+private slots:
+    void on_PB_AddOrder_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     void SaveData();
     void LoadData();
 
-    QMap<QDate, QString> OrdersMap;
+
+    WorkingDay* FindWorkingDay(QDate const& date);
+    void SetOrder(QDate const& NewDate, int TimeIndex, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
+
+    QVector<WorkingDay> OrdersList;
 
 };
 #endif // MAINWINDOW_H
