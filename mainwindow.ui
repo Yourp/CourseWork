@@ -23,6 +23,26 @@
       <height>221</height>
      </rect>
     </property>
+    <property name="minimumDate">
+     <date>
+      <year>2020</year>
+      <month>9</month>
+      <day>14</day>
+     </date>
+    </property>
+    <property name="maximumDate">
+     <date>
+      <year>2100</year>
+      <month>12</month>
+      <day>31</day>
+     </date>
+    </property>
+    <property name="horizontalHeaderFormat">
+     <enum>QCalendarWidget::ShortDayNames</enum>
+    </property>
+    <property name="verticalHeaderFormat">
+     <enum>QCalendarWidget::NoVerticalHeader</enum>
+    </property>
    </widget>
    <widget class="QTableWidget" name="TW_Orders">
     <property name="geometry">
@@ -33,6 +53,9 @@
       <height>222</height>
      </rect>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::WheelFocus</enum>
+    </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
@@ -41,6 +64,9 @@
     </property>
     <property name="autoScroll">
      <bool>false</bool>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
     </property>
     <property name="selectionMode">
      <enum>QAbstractItemView::SingleSelection</enum>
@@ -104,7 +130,7 @@
      <item>
       <widget class="QPushButton" name="PB_AddOrder">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Записать клиента</string>

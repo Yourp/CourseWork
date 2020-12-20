@@ -9,6 +9,7 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
+#include <QtCore/QDate>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCalendarWidget>
@@ -57,12 +58,18 @@ public:
         W_Calendar = new QCalendarWidget(centralwidget);
         W_Calendar->setObjectName(QString::fromUtf8("W_Calendar"));
         W_Calendar->setGeometry(QRect(10, 410, 251, 221));
+        W_Calendar->setMinimumDate(QDate(2020, 9, 14));
+        W_Calendar->setMaximumDate(QDate(2100, 12, 31));
+        W_Calendar->setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
+        W_Calendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
         TW_Orders = new QTableWidget(centralwidget);
         TW_Orders->setObjectName(QString::fromUtf8("TW_Orders"));
         TW_Orders->setGeometry(QRect(280, 410, 641, 222));
+        TW_Orders->setFocusPolicy(Qt::WheelFocus);
         TW_Orders->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         TW_Orders->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         TW_Orders->setAutoScroll(false);
+        TW_Orders->setEditTriggers(QAbstractItemView::NoEditTriggers);
         TW_Orders->setSelectionMode(QAbstractItemView::SingleSelection);
         TW_Orders->setSelectionBehavior(QAbstractItemView::SelectRows);
         widget = new QWidget(centralwidget);
@@ -109,7 +116,7 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         PB_AddOrder = new QPushButton(widget1);
         PB_AddOrder->setObjectName(QString::fromUtf8("PB_AddOrder"));
-        PB_AddOrder->setEnabled(false);
+        PB_AddOrder->setEnabled(true);
 
         verticalLayout->addWidget(PB_AddOrder);
 

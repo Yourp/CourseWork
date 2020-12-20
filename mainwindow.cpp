@@ -22,20 +22,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->TW_Orders->setColumnWidth(Surname, 200);
     ui->TW_Orders->setColumnWidth(PhoneNumber, 200);
 
-    //ui->TW_Orders->setItem(0, Name, new QTableWidgetItem("Саня"));
 
-    ui->W_Calendar->showToday();
 
+    for (int i = 0; i < WorkingHours; ++i)
+    {
+        ui->TW_Orders->setItem(i, Name, new QTableWidgetItem());
+        ui->TW_Orders->setItem(i, Surname, new QTableWidgetItem());
+        ui->TW_Orders->setItem(i, PhoneNumber, new QTableWidgetItem());
+    }
 
 
     LoadData();
 
-    WorkingDay Day;
-
-    Day.Orders[5][Name] = "Gaa";
-    Day.Date = ui->W_Calendar->selectedDate();
-
-    OrdersList.push_back(Day);
+    ui->W_Calendar->showToday();
+    on_W_Calendar_selectionChanged();
 }
 
 MainWindow::~MainWindow()
@@ -66,15 +66,15 @@ void MainWindow::SaveData()
         {
             if (!Itr.Orders[TimeIndex][Name].isEmpty())
             {
-                PrefixName += "_" + QString::number(TimeIndex);
+                QString CurrentPrefixName = PrefixName + "_" + QString::number(TimeIndex);
 
-                Data.setValue(PrefixName + "Name", Itr.Orders[TimeIndex][Name]);
-                Data.setValue(PrefixName + "Surname", Itr.Orders[TimeIndex][Surname]);
-                Data.setValue(PrefixName + "PhoneNumber", Itr.Orders[TimeIndex][PhoneNumber]);
-
-                OrderSaveIndex++;
+                Data.setValue(CurrentPrefixName + "Name", Itr.Orders[TimeIndex][Name]);
+                Data.setValue(CurrentPrefixName + "Surname", Itr.Orders[TimeIndex][Surname]);
+                Data.setValue(CurrentPrefixName + "PhoneNumber", Itr.Orders[TimeIndex][PhoneNumber]);
             }
         }
+
+        OrderSaveIndex++;
     }
 }
 
@@ -140,6 +140,33 @@ void MainWindow::SetOrder(const QDate &NewDate, int TimeIndex, const QString &Ne
 
     NewDay.Date = NewDate;
     NewDay.SetOrder(TimeIndex, NewName, NewSurname, NewPhoneNumber);
+    OrdersList.push_back(NewDay);
+}
+
+void MainWindow::SetOrderInTablWidget(int Row, const QString &NewName, const QString &NewSurname, const QString &NewPhoneNumber)
+{
+    if (QTableWidgetItem* NameItem = ui->TW_Orders->item(Row, Name))
+    {
+        NameItem->setText(NewName);
+    }
+
+    if (QTableWidgetItem* SurnameItem = ui->TW_Orders->item(Row, Surname))
+    {
+        SurnameItem->setText(NewSurname);
+    }
+
+    if (QTableWidgetItem* PhoneItem = ui->TW_Orders->item(Row, PhoneNumber))
+    {
+        PhoneItem->setText(NewPhoneNumber);
+    }
+}
+
+void MainWindow::ClearAllOrdersInTablWidget()
+{
+    for (int i = 0; i < WorkingHours; ++i)
+    {
+        SetOrderInTablWidget(i, "", "", "");
+    }
 }
 
 
@@ -152,5 +179,33 @@ void WorkingDay::SetOrder(int TimeIndex, const QString &NewName, const QString &
 
 void MainWindow::on_PB_AddOrder_clicked()
 {
+    int RowIndex = ui->TW_Orders->currentRow();
 
+    if (RowIndex < 0)
+    {
+        return;
+    }
+
+    QString NewName = ui->LE_Name->text();
+    QString NewSurame = ui->LE_Surname->text();
+    QString NewPhone = ui->LE_Phone->text();
+
+    SetOrderInTablWidget(RowIndex, NewName, NewSurame, NewPhone);
+    SetOrder(ui->W_Calendar->selectedDate(), RowIndex, NewName, NewSurame, NewPhone);
+}
+
+
+void MainWindow::on_W_Calendar_selectionChanged()
+{
+    if (WorkingDay const* FindedDay = FindWorkingDay(ui->W_Calendar->selectedDate()))
+    {
+        for (int i = 0; i < WorkingHours; ++i)
+        {
+            SetOrderInTablWidget(i, FindedDay->Orders[i][Name], FindedDay->Orders[i][Surname], FindedDay->Orders[i][PhoneNumber]);
+        }
+    }
+    else
+    {
+        ClearAllOrdersInTablWidget();
+    }
 }

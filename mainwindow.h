@@ -39,7 +39,9 @@ public:
     void closeEvent(QCloseEvent *Event) override;
 
 private slots:
+
     void on_PB_AddOrder_clicked();
+    void on_W_Calendar_selectionChanged();
 
 private:
     Ui::MainWindow *ui;
@@ -50,6 +52,8 @@ private:
 
     WorkingDay* FindWorkingDay(QDate const& date);
     void SetOrder(QDate const& NewDate, int TimeIndex, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
+    void ClearAllOrdersInTablWidget();
+    void SetOrderInTablWidget(int Row, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
 
     QVector<WorkingDay> OrdersList;
 
