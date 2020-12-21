@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSettings>
+#include <QTimer>
 
 
 
@@ -16,13 +17,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->TW_Orders->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     ui->TW_Orders->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     ui->TW_Orders->verticalHeader()->setDefaultSectionSize(25);
-    ui->TW_Orders->horizontalHeader()->setFixedHeight(22);
+    ui->TW_Orders->horizontalHeader()->setFixedHeight(20);
 
     ui->TW_Orders->setColumnWidth(Name, 200);
     ui->TW_Orders->setColumnWidth(Surname, 200);
     ui->TW_Orders->setColumnWidth(PhoneNumber, 200);
-
-
 
     for (int i = 0; i < WorkingHours; ++i)
     {
@@ -31,16 +30,34 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         ui->TW_Orders->setItem(i, PhoneNumber, new QTableWidgetItem());
     }
 
+    connect(ui->LE_Name,    SIGNAL(textChanged(const QString &)), this, SLOT(AnyLineChanged(const QString &)));
+    connect(ui->LE_Surname, SIGNAL(textChanged(const QString &)), this, SLOT(AnyLineChanged(const QString &)));
+    connect(ui->LE_Phone,   SIGNAL(textChanged(const QString &)), this, SLOT(AnyLineChanged(const QString &)));
 
     LoadData();
 
     ui->W_Calendar->showToday();
     on_W_Calendar_selectionChanged();
+    SetCheckValidationOfAddOrderButton(true);
+
+    Timer = new QTimer(this);
+    connect(Timer, SIGNAL(timeout()), this, SLOT(OnTick()));
+    Timer->start(1000);
 }
 
 MainWindow::~MainWindow()
 {
+    delete Timer;
     delete ui;
+}
+
+void MainWindow::OnTick()
+{
+    if (bCheckValidationOfAddOrderButton)
+    {
+        SetCheckValidationOfAddOrderButton(false);
+        HandleAddOrderButton();
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *Event)
@@ -108,6 +125,71 @@ void MainWindow::LoadData()
         OrdersList.push_back(Day);
         PrefixName = "OSI" + QString::number(++OrderSaveIndex);
     }
+}
+
+void MainWindow::HandleAddOrderButton()
+{
+    int RowIndex = ui->TW_Orders->currentRow();
+
+    if (RowIndex < 0)
+    {
+        return;
+    }
+
+    bool bEnableAddOrderButton = !ui->LE_Name->text().isEmpty() && !ui->LE_Surname->text().isEmpty() && !ui->LE_Phone->text().isEmpty();
+
+    if (QTableWidgetItem* NameItem = ui->TW_Orders->item(RowIndex, Name))
+    {
+        if (NameItem->text() != ui->LE_Name->text())
+        {
+            ui->PB_AddOrder->setEnabled(bEnableAddOrderButton);
+            return;
+        }
+    }
+
+    if (QTableWidgetItem* SurnameItem = ui->TW_Orders->item(RowIndex, Surname))
+    {
+        if (SurnameItem->text() != ui->LE_Surname->text())
+        {
+            ui->PB_AddOrder->setEnabled(bEnableAddOrderButton);
+            return;
+        }
+    }
+
+    if (QTableWidgetItem* PhoneItem = ui->TW_Orders->item(RowIndex, PhoneNumber))
+    {
+        if (PhoneItem->text() != ui->LE_Phone->text())
+        {
+            ui->PB_AddOrder->setEnabled(bEnableAddOrderButton);
+            return;
+        }
+    }
+
+    ui->PB_AddOrder->setEnabled(false);
+}
+
+void MainWindow::HandleDeleteOrderButton()
+{
+    int RowIndex = ui->TW_Orders->currentRow();
+
+    if (RowIndex < 0)
+    {
+        return;
+    }
+
+    for (int i = 0; i < ColumnTypeMax; ++i)
+    {
+        if (QTableWidgetItem* Item = ui->TW_Orders->item(RowIndex, i))
+        {
+            if (!Item->text().isEmpty())
+            {
+                ui->PB_DeleteOrder->setEnabled(true);
+                return;
+            }
+        }
+    }
+
+    ui->PB_DeleteOrder->setEnabled(false);
 }
 
 WorkingDay *MainWindow::FindWorkingDay(QDate const& date)
@@ -192,8 +274,22 @@ void MainWindow::on_PB_AddOrder_clicked()
 
     SetOrderInTablWidget(RowIndex, NewName, NewSurame, NewPhone);
     SetOrder(ui->W_Calendar->selectedDate(), RowIndex, NewName, NewSurame, NewPhone);
+    ui->PB_AddOrder->setEnabled(false);
 }
 
+void MainWindow::on_PB_DeleteOrder_clicked()
+{
+    int RowIndex = ui->TW_Orders->currentRow();
+
+    if (RowIndex < 0)
+    {
+        return;
+    }
+
+    SetOrderInTablWidget(RowIndex, "", "", "");
+    SetOrder(ui->W_Calendar->selectedDate(), RowIndex, "", "", "");
+    ui->PB_DeleteOrder->setEnabled(false);
+}
 
 void MainWindow::on_W_Calendar_selectionChanged()
 {
@@ -208,4 +304,42 @@ void MainWindow::on_W_Calendar_selectionChanged()
     {
         ClearAllOrdersInTablWidget();
     }
+
+    int Row    = ui->TW_Orders->currentRow();
+    int Column = ui->TW_Orders->currentColumn();
+
+    on_TW_Orders_currentCellChanged(Row, Column, Row, Column);
 }
+
+void MainWindow::on_TW_Orders_currentCellChanged(int currentRow, int, int, int)
+{
+    if (QTableWidgetItem* NameItem = ui->TW_Orders->item(currentRow, Name))
+    {
+        ui->LE_Name->setText(NameItem->text());
+    }
+
+    if (QTableWidgetItem* SurnameItem = ui->TW_Orders->item(currentRow, Surname))
+    {
+        ui->LE_Surname->setText(SurnameItem->text());
+    }
+
+    if (QTableWidgetItem* PhoneItem = ui->TW_Orders->item(currentRow, PhoneNumber))
+    {
+        ui->LE_Phone->setText(PhoneItem->text());
+    }
+
+    HandleDeleteOrderButton();
+}
+
+void MainWindow::AnyLineChanged(const QString & Arg)
+{
+    if (Arg.isEmpty())
+    {
+        ui->PB_AddOrder->setEnabled(false);
+        return;
+    }
+
+    SetCheckValidationOfAddOrderButton(true);
+}
+
+

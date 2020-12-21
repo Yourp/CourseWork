@@ -33,7 +33,7 @@ public:
     QWidget *centralwidget;
     QCalendarWidget *W_Calendar;
     QTableWidget *TW_Orders;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QFormLayout *formLayout;
     QLabel *L_Name;
     QLineEdit *LE_Name;
@@ -41,7 +41,7 @@ public:
     QLineEdit *LE_Surname;
     QLabel *L_Phone;
     QLineEdit *LE_Phone;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout;
     QPushButton *PB_AddOrder;
     QPushButton *PB_DeleteOrder;
@@ -68,59 +68,62 @@ public:
         TW_Orders->setFocusPolicy(Qt::WheelFocus);
         TW_Orders->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         TW_Orders->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        TW_Orders->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContentsOnFirstShow);
         TW_Orders->setAutoScroll(false);
         TW_Orders->setEditTriggers(QAbstractItemView::NoEditTriggers);
         TW_Orders->setSelectionMode(QAbstractItemView::SingleSelection);
         TW_Orders->setSelectionBehavior(QAbstractItemView::SelectRows);
-        widget = new QWidget(centralwidget);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 320, 331, 71));
-        formLayout = new QFormLayout(widget);
+        TW_Orders->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+        TW_Orders->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+        layoutWidget = new QWidget(centralwidget);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(10, 320, 331, 74));
+        formLayout = new QFormLayout(layoutWidget);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setContentsMargins(0, 0, 0, 0);
-        L_Name = new QLabel(widget);
+        L_Name = new QLabel(layoutWidget);
         L_Name->setObjectName(QString::fromUtf8("L_Name"));
 
         formLayout->setWidget(0, QFormLayout::LabelRole, L_Name);
 
-        LE_Name = new QLineEdit(widget);
+        LE_Name = new QLineEdit(layoutWidget);
         LE_Name->setObjectName(QString::fromUtf8("LE_Name"));
 
         formLayout->setWidget(0, QFormLayout::FieldRole, LE_Name);
 
-        L_Surname = new QLabel(widget);
+        L_Surname = new QLabel(layoutWidget);
         L_Surname->setObjectName(QString::fromUtf8("L_Surname"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, L_Surname);
 
-        LE_Surname = new QLineEdit(widget);
+        LE_Surname = new QLineEdit(layoutWidget);
         LE_Surname->setObjectName(QString::fromUtf8("LE_Surname"));
 
         formLayout->setWidget(1, QFormLayout::FieldRole, LE_Surname);
 
-        L_Phone = new QLabel(widget);
+        L_Phone = new QLabel(layoutWidget);
         L_Phone->setObjectName(QString::fromUtf8("L_Phone"));
 
         formLayout->setWidget(2, QFormLayout::LabelRole, L_Phone);
 
-        LE_Phone = new QLineEdit(widget);
+        LE_Phone = new QLineEdit(layoutWidget);
         LE_Phone->setObjectName(QString::fromUtf8("LE_Phone"));
 
         formLayout->setWidget(2, QFormLayout::FieldRole, LE_Phone);
 
-        widget1 = new QWidget(centralwidget);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(370, 340, 100, 54));
-        verticalLayout = new QVBoxLayout(widget1);
+        layoutWidget1 = new QWidget(centralwidget);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(370, 340, 100, 54));
+        verticalLayout = new QVBoxLayout(layoutWidget1);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        PB_AddOrder = new QPushButton(widget1);
+        PB_AddOrder = new QPushButton(layoutWidget1);
         PB_AddOrder->setObjectName(QString::fromUtf8("PB_AddOrder"));
-        PB_AddOrder->setEnabled(true);
+        PB_AddOrder->setEnabled(false);
 
         verticalLayout->addWidget(PB_AddOrder);
 
-        PB_DeleteOrder = new QPushButton(widget1);
+        PB_DeleteOrder = new QPushButton(layoutWidget1);
         PB_DeleteOrder->setObjectName(QString::fromUtf8("PB_DeleteOrder"));
         PB_DeleteOrder->setEnabled(false);
 

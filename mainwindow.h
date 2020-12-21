@@ -37,11 +37,16 @@ public:
     ~MainWindow();
 
     void closeEvent(QCloseEvent *Event) override;
+    void SetCheckValidationOfAddOrderButton(bool NewVal) { bCheckValidationOfAddOrderButton = NewVal; }
 
 private slots:
 
+    void OnTick();
     void on_PB_AddOrder_clicked();
     void on_W_Calendar_selectionChanged();
+    void on_TW_Orders_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void AnyLineChanged(const QString & Arg);
+    void on_PB_DeleteOrder_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -54,8 +59,13 @@ private:
     void SetOrder(QDate const& NewDate, int TimeIndex, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
     void ClearAllOrdersInTablWidget();
     void SetOrderInTablWidget(int Row, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
+    void HandleAddOrderButton();
+    void HandleDeleteOrderButton();
+
+    QTimer* Timer;
 
     QVector<WorkingDay> OrdersList;
+    uint8_t bCheckValidationOfAddOrderButton : 1;
 
 };
 #endif // MAINWINDOW_H
