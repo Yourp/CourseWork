@@ -14,12 +14,15 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCalendarWidget>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
@@ -31,9 +34,9 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QCalendarWidget *W_Calendar;
-    QTableWidget *TW_Orders;
-    QWidget *layoutWidget;
+    QWidget *widget;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
     QFormLayout *formLayout;
     QLabel *L_Name;
     QLineEdit *LE_Name;
@@ -41,10 +44,12 @@ public:
     QLineEdit *LE_Surname;
     QLabel *L_Phone;
     QLineEdit *LE_Phone;
-    QWidget *layoutWidget1;
-    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout;
     QPushButton *PB_AddOrder;
     QPushButton *PB_DeleteOrder;
+    QSpacerItem *verticalSpacer;
+    QCalendarWidget *W_Calendar;
+    QTableWidget *TW_Orders;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -52,19 +57,92 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1058, 738);
+        MainWindow->resize(661, 472);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        W_Calendar = new QCalendarWidget(centralwidget);
+        widget = new QWidget(centralwidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(10, 10, 643, 420));
+        gridLayout = new QGridLayout(widget);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        formLayout = new QFormLayout();
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        L_Name = new QLabel(widget);
+        L_Name->setObjectName(QString::fromUtf8("L_Name"));
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, L_Name);
+
+        LE_Name = new QLineEdit(widget);
+        LE_Name->setObjectName(QString::fromUtf8("LE_Name"));
+
+        formLayout->setWidget(0, QFormLayout::FieldRole, LE_Name);
+
+        L_Surname = new QLabel(widget);
+        L_Surname->setObjectName(QString::fromUtf8("L_Surname"));
+
+        formLayout->setWidget(1, QFormLayout::LabelRole, L_Surname);
+
+        LE_Surname = new QLineEdit(widget);
+        LE_Surname->setObjectName(QString::fromUtf8("LE_Surname"));
+
+        formLayout->setWidget(1, QFormLayout::FieldRole, LE_Surname);
+
+        L_Phone = new QLabel(widget);
+        L_Phone->setObjectName(QString::fromUtf8("L_Phone"));
+
+        formLayout->setWidget(2, QFormLayout::LabelRole, L_Phone);
+
+        LE_Phone = new QLineEdit(widget);
+        LE_Phone->setObjectName(QString::fromUtf8("LE_Phone"));
+        LE_Phone->setInputMethodHints(Qt::ImhNone);
+        LE_Phone->setEchoMode(QLineEdit::Normal);
+        LE_Phone->setClearButtonEnabled(true);
+
+        formLayout->setWidget(2, QFormLayout::FieldRole, LE_Phone);
+
+
+        verticalLayout->addLayout(formLayout);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        PB_AddOrder = new QPushButton(widget);
+        PB_AddOrder->setObjectName(QString::fromUtf8("PB_AddOrder"));
+        PB_AddOrder->setEnabled(false);
+
+        horizontalLayout->addWidget(PB_AddOrder);
+
+        PB_DeleteOrder = new QPushButton(widget);
+        PB_DeleteOrder->setObjectName(QString::fromUtf8("PB_DeleteOrder"));
+        PB_DeleteOrder->setEnabled(false);
+
+        horizontalLayout->addWidget(PB_DeleteOrder);
+
+
+        verticalLayout->addLayout(horizontalLayout);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
+
+        gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+        W_Calendar = new QCalendarWidget(widget);
         W_Calendar->setObjectName(QString::fromUtf8("W_Calendar"));
-        W_Calendar->setGeometry(QRect(10, 410, 251, 221));
         W_Calendar->setMinimumDate(QDate(2020, 9, 14));
         W_Calendar->setMaximumDate(QDate(2100, 12, 31));
         W_Calendar->setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
         W_Calendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
-        TW_Orders = new QTableWidget(centralwidget);
+
+        gridLayout->addWidget(W_Calendar, 0, 1, 1, 1);
+
+        TW_Orders = new QTableWidget(widget);
         TW_Orders->setObjectName(QString::fromUtf8("TW_Orders"));
-        TW_Orders->setGeometry(QRect(280, 410, 641, 222));
+        TW_Orders->setMinimumSize(QSize(641, 222));
+        TW_Orders->setMaximumSize(QSize(641, 222));
         TW_Orders->setFocusPolicy(Qt::WheelFocus);
         TW_Orders->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         TW_Orders->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -75,64 +153,13 @@ public:
         TW_Orders->setSelectionBehavior(QAbstractItemView::SelectRows);
         TW_Orders->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
         TW_Orders->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-        layoutWidget = new QWidget(centralwidget);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 320, 331, 74));
-        formLayout = new QFormLayout(layoutWidget);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        formLayout->setContentsMargins(0, 0, 0, 0);
-        L_Name = new QLabel(layoutWidget);
-        L_Name->setObjectName(QString::fromUtf8("L_Name"));
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, L_Name);
-
-        LE_Name = new QLineEdit(layoutWidget);
-        LE_Name->setObjectName(QString::fromUtf8("LE_Name"));
-
-        formLayout->setWidget(0, QFormLayout::FieldRole, LE_Name);
-
-        L_Surname = new QLabel(layoutWidget);
-        L_Surname->setObjectName(QString::fromUtf8("L_Surname"));
-
-        formLayout->setWidget(1, QFormLayout::LabelRole, L_Surname);
-
-        LE_Surname = new QLineEdit(layoutWidget);
-        LE_Surname->setObjectName(QString::fromUtf8("LE_Surname"));
-
-        formLayout->setWidget(1, QFormLayout::FieldRole, LE_Surname);
-
-        L_Phone = new QLabel(layoutWidget);
-        L_Phone->setObjectName(QString::fromUtf8("L_Phone"));
-
-        formLayout->setWidget(2, QFormLayout::LabelRole, L_Phone);
-
-        LE_Phone = new QLineEdit(layoutWidget);
-        LE_Phone->setObjectName(QString::fromUtf8("LE_Phone"));
-
-        formLayout->setWidget(2, QFormLayout::FieldRole, LE_Phone);
-
-        layoutWidget1 = new QWidget(centralwidget);
-        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(370, 340, 100, 54));
-        verticalLayout = new QVBoxLayout(layoutWidget1);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        PB_AddOrder = new QPushButton(layoutWidget1);
-        PB_AddOrder->setObjectName(QString::fromUtf8("PB_AddOrder"));
-        PB_AddOrder->setEnabled(false);
-
-        verticalLayout->addWidget(PB_AddOrder);
-
-        PB_DeleteOrder = new QPushButton(layoutWidget1);
-        PB_DeleteOrder->setObjectName(QString::fromUtf8("PB_DeleteOrder"));
-        PB_DeleteOrder->setEnabled(false);
-
-        verticalLayout->addWidget(PB_DeleteOrder);
+        gridLayout->addWidget(TW_Orders, 1, 0, 1, 2);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1058, 22));
+        menubar->setGeometry(QRect(0, 0, 661, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));

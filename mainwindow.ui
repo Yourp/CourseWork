@@ -6,153 +6,176 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1058</width>
-    <height>738</height>
+    <width>661</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Course Work</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QCalendarWidget" name="W_Calendar">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>410</y>
-      <width>251</width>
-      <height>221</height>
+      <y>10</y>
+      <width>643</width>
+      <height>420</height>
      </rect>
     </property>
-    <property name="minimumDate">
-     <date>
-      <year>2020</year>
-      <month>9</month>
-      <day>14</day>
-     </date>
-    </property>
-    <property name="maximumDate">
-     <date>
-      <year>2100</year>
-      <month>12</month>
-      <day>31</day>
-     </date>
-    </property>
-    <property name="horizontalHeaderFormat">
-     <enum>QCalendarWidget::ShortDayNames</enum>
-    </property>
-    <property name="verticalHeaderFormat">
-     <enum>QCalendarWidget::NoVerticalHeader</enum>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="TW_Orders">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>410</y>
-      <width>641</width>
-      <height>222</height>
-     </rect>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::WheelFocus</enum>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="sizeAdjustPolicy">
-     <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-    </property>
-    <property name="autoScroll">
-     <bool>false</bool>
-    </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::NoEditTriggers</set>
-    </property>
-    <property name="selectionMode">
-     <enum>QAbstractItemView::SingleSelection</enum>
-    </property>
-    <property name="selectionBehavior">
-     <enum>QAbstractItemView::SelectRows</enum>
-    </property>
-    <property name="verticalScrollMode">
-     <enum>QAbstractItemView::ScrollPerPixel</enum>
-    </property>
-    <property name="horizontalScrollMode">
-     <enum>QAbstractItemView::ScrollPerPixel</enum>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>320</y>
-      <width>331</width>
-      <height>74</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout">
+    <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="L_Name">
-       <property name="text">
-        <string>Имя клиента:</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="L_Name">
+           <property name="text">
+            <string>Имя клиента:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="LE_Name"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="L_Surname">
+           <property name="text">
+            <string>Фамилия:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="LE_Surname"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="L_Phone">
+           <property name="text">
+            <string>Контактный номер:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="LE_Phone">
+           <property name="inputMethodHints">
+            <set>Qt::ImhNone</set>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::Normal</enum>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="PB_AddOrder">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Записать клиента</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="PB_DeleteOrder">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Удалить запись</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="LE_Name"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="L_Surname">
-       <property name="text">
-        <string>Фамилия:</string>
+      <widget class="QCalendarWidget" name="W_Calendar">
+       <property name="minimumDate">
+        <date>
+         <year>2020</year>
+         <month>9</month>
+         <day>14</day>
+        </date>
+       </property>
+       <property name="maximumDate">
+        <date>
+         <year>2100</year>
+         <month>12</month>
+         <day>31</day>
+        </date>
+       </property>
+       <property name="horizontalHeaderFormat">
+        <enum>QCalendarWidget::ShortDayNames</enum>
+       </property>
+       <property name="verticalHeaderFormat">
+        <enum>QCalendarWidget::NoVerticalHeader</enum>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="LE_Surname"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="L_Phone">
-       <property name="text">
-        <string>Контактный номер:</string>
+     <item row="1" column="0" colspan="2">
+      <widget class="QTableWidget" name="TW_Orders">
+       <property name="minimumSize">
+        <size>
+         <width>641</width>
+         <height>222</height>
+        </size>
        </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="LE_Phone"/>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>340</y>
-      <width>100</width>
-      <height>54</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QPushButton" name="PB_AddOrder">
-       <property name="enabled">
+       <property name="maximumSize">
+        <size>
+         <width>641</width>
+         <height>222</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::WheelFocus</enum>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+       </property>
+       <property name="autoScroll">
         <bool>false</bool>
        </property>
-       <property name="text">
-        <string>Записать клиента</string>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="PB_DeleteOrder">
-       <property name="enabled">
-        <bool>false</bool>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
        </property>
-       <property name="text">
-        <string>Удалить запись</string>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="horizontalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
        </property>
       </widget>
      </item>
@@ -164,7 +187,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1058</width>
+     <width>661</width>
      <height>22</height>
     </rect>
    </property>

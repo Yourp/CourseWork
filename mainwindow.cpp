@@ -3,12 +3,11 @@
 #include <QSettings>
 #include <QTimer>
 
-
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
+    setFixedSize(size());
     ui->TW_Orders->setRowCount(WorkingHours);
     ui->TW_Orders->setColumnCount(ColumnTypeMax);
 
@@ -18,6 +17,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->TW_Orders->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     ui->TW_Orders->verticalHeader()->setDefaultSectionSize(25);
     ui->TW_Orders->horizontalHeader()->setFixedHeight(20);
+
+    ui->LE_Phone->setInputMask("999 99 999 99 99;_");
+
+
+
+//    ui->LE_Name->setInputMask("!>A<AAAAAAAAAAAAAAAAAAAA");
+//    ui->LE_Surname->setInputMask("!>A<AAAAAAAAAAAAAAAAAAAA");
 
     ui->TW_Orders->setColumnWidth(Name, 200);
     ui->TW_Orders->setColumnWidth(Surname, 200);
@@ -42,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     Timer = new QTimer(this);
     connect(Timer, SIGNAL(timeout()), this, SLOT(OnTick()));
-    Timer->start(1000);
+    Timer->start(50);
 }
 
 MainWindow::~MainWindow()
@@ -288,7 +294,10 @@ void MainWindow::on_PB_DeleteOrder_clicked()
 
     SetOrderInTablWidget(RowIndex, "", "", "");
     SetOrder(ui->W_Calendar->selectedDate(), RowIndex, "", "", "");
-    ui->PB_DeleteOrder->setEnabled(false);
+    int Row    = ui->TW_Orders->currentRow();
+    int Column = ui->TW_Orders->currentColumn();
+
+    on_TW_Orders_currentCellChanged(Row, Column, Row, Column);
 }
 
 void MainWindow::on_W_Calendar_selectionChanged()
