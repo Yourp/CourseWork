@@ -1,6 +1,7 @@
 #include "mainwindow.h"
-
 #include <QApplication>
+
+/** Файл сгенерирован самим QT. Здесь создается окно программы и выводится на экран. */
 
 int main(int argc, char *argv[])
 {

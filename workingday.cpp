@@ -2,6 +2,7 @@
 
 WorkingDay::WorkingDay()
 {
+    /** Заполняем день пустыми заказами. Так проще работать с рабочим днем оперируя индексами. */
     for (int i = 0; i < ProgramStatics::WorkingHours; ++i)
     {
         Orders[i].fill("", ColumnTypeMax);
