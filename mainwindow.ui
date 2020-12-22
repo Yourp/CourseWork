@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>661</width>
-    <height>472</height>
+    <width>684</width>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>643</width>
+      <x>11</x>
+      <y>12</y>
+      <width>663</width>
       <height>420</height>
      </rect>
     </property>
@@ -51,7 +51,7 @@
          <item row="2" column="0">
           <widget class="QLabel" name="L_Phone">
            <property name="text">
-            <string>Контактный номер:</string>
+            <string>Телефон:</string>
            </property>
           </widget>
          </item>
@@ -68,27 +68,38 @@
            </property>
           </widget>
          </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="PB_AddOrder">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
+         <item row="3" column="0">
+          <widget class="QLabel" name="L_SessionType">
            <property name="text">
-            <string>Записать клиента</string>
+            <string>Тип фотосъемки:</string>
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="PB_DeleteOrder">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="CB_SessionType"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="L_Cost">
            <property name="text">
-            <string>Удалить запись</string>
+            <string>Цена:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QSpinBox" name="SB_Cost">
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="maximum">
+            <number>9999</number>
            </property>
           </widget>
          </item>
@@ -107,10 +118,43 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="PB_AddOrder">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Выбранное время в таблице и заполненные поля - включают кнопку.</string>
+           </property>
+           <property name="text">
+            <string>Записать клиента</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="PB_DeleteOrder">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Удалить запись</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </item>
      <item row="0" column="1">
       <widget class="QCalendarWidget" name="W_Calendar">
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="minimumDate">
         <date>
          <year>2020</year>
@@ -137,13 +181,13 @@
       <widget class="QTableWidget" name="TW_Orders">
        <property name="minimumSize">
         <size>
-         <width>641</width>
+         <width>661</width>
          <height>222</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>641</width>
+         <width>661</width>
          <height>222</height>
         </size>
        </property>
@@ -187,7 +231,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>661</width>
+     <width>684</width>
      <height>22</height>
     </rect>
    </property>

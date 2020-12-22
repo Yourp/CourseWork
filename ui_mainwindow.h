@@ -13,6 +13,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCalendarWidget>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -23,6 +24,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
@@ -44,10 +46,14 @@ public:
     QLineEdit *LE_Surname;
     QLabel *L_Phone;
     QLineEdit *LE_Phone;
+    QLabel *L_SessionType;
+    QComboBox *CB_SessionType;
+    QLabel *L_Cost;
+    QSpinBox *SB_Cost;
+    QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout;
     QPushButton *PB_AddOrder;
     QPushButton *PB_DeleteOrder;
-    QSpacerItem *verticalSpacer;
     QCalendarWidget *W_Calendar;
     QTableWidget *TW_Orders;
     QMenuBar *menubar;
@@ -57,12 +63,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(661, 472);
+        MainWindow->resize(684, 475);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         widget = new QWidget(centralwidget);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 10, 643, 420));
+        widget->setGeometry(QRect(11, 12, 663, 420));
         gridLayout = new QGridLayout(widget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -103,8 +109,37 @@ public:
 
         formLayout->setWidget(2, QFormLayout::FieldRole, LE_Phone);
 
+        L_SessionType = new QLabel(widget);
+        L_SessionType->setObjectName(QString::fromUtf8("L_SessionType"));
+
+        formLayout->setWidget(3, QFormLayout::LabelRole, L_SessionType);
+
+        CB_SessionType = new QComboBox(widget);
+        CB_SessionType->setObjectName(QString::fromUtf8("CB_SessionType"));
+
+        formLayout->setWidget(3, QFormLayout::FieldRole, CB_SessionType);
+
+        L_Cost = new QLabel(widget);
+        L_Cost->setObjectName(QString::fromUtf8("L_Cost"));
+
+        formLayout->setWidget(4, QFormLayout::LabelRole, L_Cost);
+
+        SB_Cost = new QSpinBox(widget);
+        SB_Cost->setObjectName(QString::fromUtf8("SB_Cost"));
+        SB_Cost->setMaximumSize(QSize(50, 16777215));
+        QFont font;
+        font.setPointSize(8);
+        SB_Cost->setFont(font);
+        SB_Cost->setMaximum(9999);
+
+        formLayout->setWidget(4, QFormLayout::FieldRole, SB_Cost);
+
 
         verticalLayout->addLayout(formLayout);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -123,15 +158,12 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout->addItem(verticalSpacer);
-
 
         gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
 
         W_Calendar = new QCalendarWidget(widget);
         W_Calendar->setObjectName(QString::fromUtf8("W_Calendar"));
+        W_Calendar->setMinimumSize(QSize(400, 0));
         W_Calendar->setMinimumDate(QDate(2020, 9, 14));
         W_Calendar->setMaximumDate(QDate(2100, 12, 31));
         W_Calendar->setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
@@ -141,8 +173,8 @@ public:
 
         TW_Orders = new QTableWidget(widget);
         TW_Orders->setObjectName(QString::fromUtf8("TW_Orders"));
-        TW_Orders->setMinimumSize(QSize(641, 222));
-        TW_Orders->setMaximumSize(QSize(641, 222));
+        TW_Orders->setMinimumSize(QSize(661, 222));
+        TW_Orders->setMaximumSize(QSize(661, 222));
         TW_Orders->setFocusPolicy(Qt::WheelFocus);
         TW_Orders->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         TW_Orders->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -159,7 +191,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 661, 22));
+        menubar->setGeometry(QRect(0, 0, 684, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -175,7 +207,12 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Course Work", nullptr));
         L_Name->setText(QCoreApplication::translate("MainWindow", "\320\230\320\274\321\217 \320\272\320\273\320\270\320\265\320\275\321\202\320\260:", nullptr));
         L_Surname->setText(QCoreApplication::translate("MainWindow", "\320\244\320\260\320\274\320\270\320\273\320\270\321\217:", nullptr));
-        L_Phone->setText(QCoreApplication::translate("MainWindow", "\320\232\320\276\320\275\321\202\320\260\320\272\321\202\320\275\321\213\320\271 \320\275\320\276\320\274\320\265\321\200:", nullptr));
+        L_Phone->setText(QCoreApplication::translate("MainWindow", "\320\242\320\265\320\273\320\265\321\204\320\276\320\275:", nullptr));
+        L_SessionType->setText(QCoreApplication::translate("MainWindow", "\320\242\320\270\320\277 \321\204\320\276\321\202\320\276\321\201\321\212\320\265\320\274\320\272\320\270:", nullptr));
+        L_Cost->setText(QCoreApplication::translate("MainWindow", "\320\246\320\265\320\275\320\260:", nullptr));
+#if QT_CONFIG(tooltip)
+        PB_AddOrder->setToolTip(QCoreApplication::translate("MainWindow", "\320\222\321\213\320\261\321\200\320\260\320\275\320\275\320\276\320\265 \320\262\321\200\320\265\320\274\321\217 \320\262 \321\202\320\260\320\261\320\273\320\270\321\206\320\265 \320\270 \320\267\320\260\320\277\320\276\320\273\320\275\320\265\320\275\320\275\321\213\320\265 \320\277\320\276\320\273\321\217 - \320\262\320\272\320\273\321\216\321\207\320\260\321\216\321\202 \320\272\320\275\320\276\320\277\320\272\321\203.", nullptr));
+#endif // QT_CONFIG(tooltip)
         PB_AddOrder->setText(QCoreApplication::translate("MainWindow", "\320\227\320\260\320\277\320\270\321\201\320\260\321\202\321\214 \320\272\320\273\320\270\320\265\320\275\321\202\320\260", nullptr));
         PB_DeleteOrder->setText(QCoreApplication::translate("MainWindow", "\320\243\320\264\320\260\320\273\320\270\321\202\321\214 \320\267\320\260\320\277\320\270\321\201\321\214", nullptr));
     } // retranslateUi

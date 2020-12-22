@@ -5,23 +5,7 @@
 #include <QDate>
 #include <QMap>
 
-constexpr uint8_t WorkingHours = 8;
-
-enum TableColumnType
-{
-    Name = 0,
-    Surname,
-    PhoneNumber,
-    ColumnTypeMax
-};
-
-struct WorkingDay
-{
-    QDate Date;
-    QString Orders[WorkingHours][ColumnTypeMax];
-
-    void SetOrder(int TimeIndex, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
-};
+class WorkingDay;
 
 
 QT_BEGIN_NAMESPACE
@@ -48,6 +32,8 @@ private slots:
     void AnyLineChanged(const QString & Arg);
     void on_PB_DeleteOrder_clicked();
 
+    void on_CB_SessionType_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 
@@ -56,9 +42,9 @@ private:
 
 
     WorkingDay* FindWorkingDay(QDate const& date);
-    void SetOrder(QDate const& NewDate, int TimeIndex, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
+    void SetOrder(QDate const& NewDate, int TimeIndex, QVector<QString> const& NewOrder);
     void ClearAllOrdersInTablWidget();
-    void SetOrderInTablWidget(int Row, QString const& NewName, QString const& NewSurname, QString const& NewPhoneNumber);
+    void SetOrderInTablWidget(int Row, QVector<QString> const& NewOrder);
     void HandleAddOrderButton();
     void HandleDeleteOrderButton();
 
