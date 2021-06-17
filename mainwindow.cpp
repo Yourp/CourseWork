@@ -157,11 +157,11 @@ void MainWindow::SaveData()
             {
                 QString CurrentPrefixName = PrefixName + "_" + QString::number(TimeIndex);
 
-                Data.setValue(CurrentPrefixName + "Name", Itr.Orders[TimeIndex][Name]);
-                Data.setValue(CurrentPrefixName + "Surname", Itr.Orders[TimeIndex][Surname]);
-                Data.setValue(CurrentPrefixName + "PhoneNumber", Itr.Orders[TimeIndex][PhoneNumber]);
-                Data.setValue(CurrentPrefixName + "SessionType", Itr.Orders[TimeIndex][SessionType]);
-                Data.setValue(CurrentPrefixName + "Cost", Itr.Orders[TimeIndex][Cost]);
+                Data.setValue(CurrentPrefixName + "Name",        Itr.Orders[TimeIndex][Name]        );
+                Data.setValue(CurrentPrefixName + "Surname",     Itr.Orders[TimeIndex][Surname]     );
+                Data.setValue(CurrentPrefixName + "PhoneNumber", Itr.Orders[TimeIndex][PhoneNumber] );
+                Data.setValue(CurrentPrefixName + "SessionType", Itr.Orders[TimeIndex][SessionType] );
+                Data.setValue(CurrentPrefixName + "Cost",        Itr.Orders[TimeIndex][Cost]        );
             }
         }
 
