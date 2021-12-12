@@ -22,4 +22,4 @@
 
 ### Предварительный просмотр интерфейса
 
-![](https://ibb.co/Lt8dSsS)
+![](https://i.ibb.co/mqG5JPJ/Course-Preview.jpg)
